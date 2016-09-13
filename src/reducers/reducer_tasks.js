@@ -13,15 +13,17 @@ export default function (state = INITIAL_STATE, action) {
         action.payload
       ]
     case CHANGE_TASK_NAME:
-      // find element with id
-      let taskIndex = state.findIndex(elm => elm.taskId === action.payload.taskId)
-      console.log(taskIndex)
-      return [
-        ...state.slice(0, taskIndex),
-        action.payload,
-        ...state.slice(taskIndex + 1)
-      ]
-      // construct new array
+      return state.map((task) => {
+
+        if (task.taskId === action.payload.taskId) {
+          return {
+            ...task,
+            taskName: action.payload.taskName,
+          }
+        } else {
+          return task
+        }
+      })
     default:
       return state
   }

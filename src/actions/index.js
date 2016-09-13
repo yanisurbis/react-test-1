@@ -32,16 +32,13 @@ export function deleteTask(task) {
 
 // export function resumeTask(task) {}
 
-export function changeTaskName(taskId, taskName, taskPrice, taskLength) {
-  console.log("changeTaskName")
+export function changeTaskName(taskId, taskName) {
 
   return {
     type: CHANGE_TASK_NAME,
     payload: {
       taskId,
       taskName,
-      taskPrice,
-      taskLength,
     }
   }
 }

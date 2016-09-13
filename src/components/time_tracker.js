@@ -7,18 +7,20 @@ import Task from './task'
 import Timer from '../helpers/timer'
 
 /*
-* tick abstraction?
-*   start()
-*   stop()
-*   getArrayValue()
-*   getStringValue1()
-*   getStringValue2()
-*   
+* TODO: validation
+* TODO: deleting
+* TODO: resuming
+* TODO: caching
+* TODO: styling
 * */
 
 class TimeTracker extends Component {
   constructor(props) {
     super(props)
+
+    // timer for time counting and string representation
+    // TODO : ?
+    // this.timer = timer
 
     this.initialState = {
       taskName: '',
@@ -29,15 +31,15 @@ class TimeTracker extends Component {
     this.state = {...this.initialState}
   }
 
-  onTaskNameChange = (event) => {
+  onTaskNameChange = () => {
     this.setState({
-      taskName: event.target.value,
+      taskName: this.taskName.value,
     })
   }
 
-  onTaskPriceChange = (event) => {
+  onTaskPriceChange = () => {
     this.setState({
-      taskPrice: event.target.value,
+      taskPrice: this.taskPrice.value,
     })
   }
 
@@ -54,7 +56,9 @@ class TimeTracker extends Component {
         taskTime,
       })
 
-      this.setState({...this.initialState})
+      this.setState({
+        ...this.initialState
+      })
       
       Timer.stop(this)
       
@@ -64,6 +68,7 @@ class TimeTracker extends Component {
       this.setState({
         taskTime: [0, 0, 0]
       })
+
       Timer.start(this)
     }
   }
@@ -77,28 +82,15 @@ class TimeTracker extends Component {
     return (
       <Task
         {...task}
+        renderTime={Timer.getStringValue2}
+        changeTaskName={this.props.changeTaskName}
         key={task.taskId.toString()}
       />
     )
   }
 
   renderTime = () => {
-
-    if (this.state.taskTime) {
-      const [hours, minutes, seconds] = this.state.taskTime
-
-      const withZero = number => number < 10 ? `0${number}` : `${number}`
-
-      if (hours === 0 && minutes == 0) {
-        return `${seconds} sec`
-      } else if (hours === 0) {
-        return `${withZero(minutes)} : ${withZero(seconds)} min`
-      } else {
-        return `${withZero(hours)} : ${withZero(minutes)} : ${withZero(seconds)} hrs`
-      }
-    } else {
-      return '0 sec'
-    }
+    return Timer.getStringValue1(this.state.taskTime)
   }
 
   render() {
@@ -106,7 +98,7 @@ class TimeTracker extends Component {
     console.log(this.props.tasks)
     
     let btnText = this.state.taskTime ? "Stop" : "Start"
-    let taskTime = this.state.taskTime || [0, 0, 0]
+
 
     return (
       <div className="mt-15">
@@ -114,9 +106,10 @@ class TimeTracker extends Component {
         <form onSubmit={this.onFormSubmit}>
             <div className="ctn flex-center">
               <input
+                type="text"
+                ref={input => this.taskName = input}
                 onChange={this.onTaskNameChange}
                 className="input"
-                type="text"
                 placeholder="Task name"
                 value={this.state.taskName}
               />
@@ -124,6 +117,7 @@ class TimeTracker extends Component {
             <div className="ctn mt-15 flex-center">
               <input
                 type="text"
+                ref={input => this.taskPrice = input}
                 onChange={this.onTaskPriceChange}
                 className="input"
                 placeholder="Price for hour"
