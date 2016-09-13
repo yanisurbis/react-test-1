@@ -12,6 +12,11 @@ import Timer from '../helpers/timer'
 * TODO: resuming
 * TODO: caching
 * TODO: styling
+* TODO: gain problem
+* TODO: key problem
+* TODO: form problem in general
+* TODO: immutable
+* TODO: testing
 * */
 
 class TimeTracker extends Component {
@@ -138,8 +143,6 @@ class TimeTracker extends Component {
   }
 }
 
-const mapStateToProps = ({ tasks }) => {
-  return { tasks }
-}
+const mapStateToProps = ({ tasks }) => ({ tasks })
 
 export default connect(mapStateToProps, { addTask, changeTaskName })(TimeTracker)

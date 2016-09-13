@@ -5,10 +5,9 @@ export const RESUME_TASK = 'RESUME_TASK'
 
 let taskId = 0
 
-export function addTask({taskName, taskPrice, taskTime}) {
-  
+export const addTask = ({taskName, taskPrice, taskTime}) => {
+  // because idea has some parsing problems
   ++taskId
-  
   return {
     type: ADD_TASK,
     payload: {
@@ -20,19 +19,19 @@ export function addTask({taskName, taskPrice, taskTime}) {
   }
 }
 
-export function deleteTask(task) {
-  
-  return {
-    type: DELETE_TASK,
-    payload: {
-      ...task      
-    }
-  }
-}
+// export const deleteTask = (task) => {
+//
+//   return {
+//     type: DELETE_TASK,
+//     payload: {
+//       ...task
+//     }
+//   }
+// }
 
 // export function resumeTask(task) {}
 
-export function changeTaskName(taskId, taskName) {
+export const changeTaskName = (taskId, taskName) => {
 
   return {
     type: CHANGE_TASK_NAME,

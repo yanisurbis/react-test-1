@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-/*
-* keypress problems
-* gain calculation problem
-* */
 
 class Task extends Component {
   constructor(props) {
