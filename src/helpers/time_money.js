@@ -11,8 +11,17 @@ const getTime = (secodns) => [  getHoursBySeconds(secodns),
 
 const withZero = number => number < 10 ? `0${number}` : `${number}`
 
+const getGain = (secs, priceForHour) => {
+  return priceForHour       * getHoursBySeconds(secs)
+      + (priceForHour / 60) * getMinutesBySeconds(secs)
+}
+
 // our time is represented by seconds, so we have seconds as input value
 const getStringRepresentationOfTime1 = (secs) => {
+  if (!secs) {
+    secs = 0
+  }
+  
   //console.log(taskTime)
   const [hours, minutes, seconds] = getTime(secs)
 
@@ -23,10 +32,13 @@ const getStringRepresentationOfTime1 = (secs) => {
   } else {
     return `${withZero(hours)} : ${withZero(minutes)} : ${withZero(seconds)} hrs`
   }
-
 }
 
 const getStringRepresentationOfTime2 = (secs) => {
+  if (!secs) {
+    secs = 0
+  }
+
   const [hours, minutes, seconds] = getTime(secs)
 
   if (hours === 0) {
@@ -37,8 +49,7 @@ const getStringRepresentationOfTime2 = (secs) => {
 }
 
 const getStringRepresentationOfGain = (secs, priceForHour) => {
-  return priceForHour       * getHoursBySeconds(secs)
-      + (priceForHour / 60) * getMinutesBySeconds(secs)
+  return `${getGain(secs, priceForHour)} Rub`
 }
 
 export { 
