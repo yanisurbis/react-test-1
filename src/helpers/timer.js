@@ -1,73 +1,48 @@
+const getHoursBySeconds = seconds => parseInt(seconds / 3600)
 
+const getMinutesBySeconds = seconds => parseInt((seconds % 3600) / 60)
 
-class Timer {
-  static start = (component) => {
-    
-    const tick = () => {
+const getSecondsBySeconds = seconds => seconds % 60
 
-      let [hours, minutes, seconds] = component.state.taskTime || [0, 0, 0]
-      console.log(`${hours} ${minutes} ${seconds}`)
+const getTime = (secodns) => [  getHoursBySeconds(secodns),
+                                getMinutesBySeconds(secodns),
+                                getSecondsBySeconds(secodns),
+                              ]
 
-      seconds++
+const withZero = number => number < 10 ? `0${number}` : `${number}`
 
-      if (seconds > 59) {
-        seconds = 0
-        minutes++
-      }
+// our time is represented by seconds, so we have seconds as input value
+const getStringRepresentationOfTime1 = (secs) => {
+  //console.log(taskTime)
+  const [hours, minutes, seconds] = getTime(secs)
 
-      if (minutes > 59) {
-        minutes = 0
-        hours++
-      }
-
-      if (hours > 9999) {
-        hours = 0
-        minutes = 0
-        seconds = 0
-      }
-
-      component.setState({
-        taskTime: [hours, minutes, seconds]
-      })
-    }
-
-    component.timer = setInterval(tick, 1000)
-  }
-  
-  static stop = (component) => {
-    // TODO: check on component.timer => error
-    
-    clearInterval(component.timer)
+  if (hours === 0 && minutes == 0) {
+    return `${seconds} sec`
+  } else if (hours === 0) {
+    return `${withZero(minutes)} : ${withZero(seconds)} min`
+  } else {
+    return `${withZero(hours)} : ${withZero(minutes)} : ${withZero(seconds)} hrs`
   }
 
-  static getStringValue1 = (taskTime) => {
-    //console.log(taskTime)
-    const [hours, minutes, seconds] = taskTime || [0, 0, 0]
+}
 
-    const withZero = number => number < 10 ? `0${number}` : `${number}`
+const getStringRepresentationOfTime2 = (secs) => {
+  const [hours, minutes, seconds] = getTime(secs)
 
-    if (hours === 0 && minutes == 0) {
-      return `${seconds} sec`
-    } else if (hours === 0) {
-      return `${withZero(minutes)} : ${withZero(seconds)} min`
-    } else {
-      return `${withZero(hours)} : ${withZero(minutes)} : ${withZero(seconds)} hrs`
-    }
-
-  }
-
-  static getStringValue2 = (taskTime) => {
-      
-      const [hours, minutes, seconds] = taskTime || [0, 0, 0]
-    
-      const withZero = number => number < 10 ? `0${number}` : `${number}`
-
-      if (hours === 0) {
-        return `${hours}:${withZero(minutes)}:${withZero(seconds)}`
-      } else {
-        return `${withZero(hours)}:${withZero(minutes)}:${withZero(seconds)}`
-      }
+  if (hours === 0) {
+    return `${hours}:${withZero(minutes)}:${withZero(seconds)}`
+  } else {
+    return `${withZero(hours)}:${withZero(minutes)}:${withZero(seconds)}`
   }
 }
 
-export default Timer
+const getStringRepresentationOfGain = (secs, priceForHour) => {
+  return priceForHour       * getHoursBySeconds(secs)
+      + (priceForHour / 60) * getMinutesBySeconds(secs)
+}
+
+export { 
+  getStringRepresentationOfTime1, 
+  getStringRepresentationOfTime2,
+  getStringRepresentationOfGain
+}

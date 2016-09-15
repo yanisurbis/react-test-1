@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 import { addTask, changeTaskName } from '../actions/index'
 import Task from './task'
 
-import Timer from '../helpers/timer'
+import { 
+  getStringRepresentationOfTime1,
+  getStringRepresentationOfTime2,
+  getStringRepresentationOfGain
+} from '../helpers/timer'
 
 /*
 * TODO: validation
@@ -50,7 +54,7 @@ class TimeTracker extends Component {
 
   onFormSubmit = (event) => {
     event.preventDefault()
-    
+
     // if it's ticking - add task
     if (this.state.taskTime) {
       let { taskName, taskPrice, taskTime } = this.state
@@ -64,21 +68,26 @@ class TimeTracker extends Component {
       this.setState({
         ...this.initialState
       })
-      
-      Timer.stop(this)
-      
-    // if it isn't ticking - start ticking  
+
+      clearInterval(this.timer)
+
+    // if it isn't ticking - start ticking
     } else {
-      
+
       this.setState({
-        taskTime: [0, 0, 0]
+        taskTime: 0
       })
 
-      Timer.start(this)
+      this.timer = setInterval(this.click, 1000)
     }
   }
 
-
+  click = () => {
+    this.setState({
+      taskTime: this.state.taskTime + 1
+    })
+  }
+  
   renderTasks = (task) => {
 
     // console.log(taskTime)
@@ -87,7 +96,8 @@ class TimeTracker extends Component {
     return (
       <Task
         {...task}
-        renderTime={Timer.getStringValue2}
+        renderTime={getStringRepresentationOfTime2}
+        renderGain={getStringRepresentationOfGain}
         changeTaskName={this.props.changeTaskName}
         key={task.taskId.toString()}
       />
@@ -95,7 +105,7 @@ class TimeTracker extends Component {
   }
 
   renderTime = () => {
-    return Timer.getStringValue1(this.state.taskTime)
+    return getStringRepresentationOfTime1(this.state.taskTime)
   }
 
   render() {
@@ -106,10 +116,10 @@ class TimeTracker extends Component {
 
 
     return (
-      <div className="mt-15">
+      <div className="">
         <h1>{this.renderTime()}</h1>
         <form onSubmit={this.onFormSubmit}>
-            <div className="ctn flex-center">
+            <div className="">
               <input
                 type="text"
                 ref={input => this.taskName = input}
@@ -119,7 +129,7 @@ class TimeTracker extends Component {
                 value={this.state.taskName}
               />
             </div>
-            <div className="ctn mt-15 flex-center">
+            <div className="">
               <input
                 type="text"
                 ref={input => this.taskPrice = input}
@@ -129,10 +139,10 @@ class TimeTracker extends Component {
                 value={this.state.taskPrice}
               />
             </div>
-            <div className="ctn mt-15 flex-center">
+            <div className="">
               <button
                 type="submit"
-                className="btn-primary submit-btn">
+                className="">
                 {btnText}
               </button>
             </div>

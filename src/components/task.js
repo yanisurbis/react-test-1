@@ -73,22 +73,9 @@ class Task extends Component {
     }
 
   }
-
-  // render time spent on a task
-  
-
-  // render gain for a task
-  renderGain = ({taskPrice, taskTime}) => {
-    let [ hours, minutes] = taskTime
-
-    let gain = (parseInt(taskPrice) * hours)
-                + (parseInt(taskPrice) / (60 / minutes))
-
-    return gain ? "0" : gain.toString()
-  }
   
   render() {
-    let { taskTime, taskName } = this.props
+    let { taskTime, taskName, taskPrice } = this.props
 
     return (
       <div className="">
@@ -118,7 +105,7 @@ class Task extends Component {
           <div className="">
             <div className="">{this.props.taskPrice} rub/hr</div>
             <div className="">{this.props.renderTime(taskTime)}</div>
-            <div className="">{this.renderGain(this.props)} rub</div>
+            <div className="">{this.props.renderGain(taskTime, taskPrice)} rub</div>
           </div>
         </div>
       </div>
