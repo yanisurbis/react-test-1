@@ -8,6 +8,7 @@ import { getIndex } from '../localStorage'
 let taskId
 
 export const addTask = ({taskName, taskPrice, taskTime}) => {
+  console.log("adding task")
   // because idea has some parsing problems
   taskId = getIndex()
   return {

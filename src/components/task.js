@@ -116,12 +116,12 @@ class Task extends Component {
 export default Task
 
 Task.propTypes = {
-  taskTime:       React.Proptypes.number,
-  taskName:       React.Proptypes.string,
-  taskPrice:      React.Proptypes.number,
-  taskId    :     React.Proptypes.number,
-  renderPrice:    React.Proptypes.func,
-  renderTime:     React.Proptypes.func,
-  renderGain:     React.Proptypes.func,
-  changeTaskName: React.Proptypes.func
+  taskTime:       React.PropTypes.number,
+  taskName:       React.PropTypes.string,
+  taskPrice:      React.PropTypes.number,
+  taskId    :     React.PropTypes.number,
+  renderPrice:    React.PropTypes.func,
+  renderTime:     React.PropTypes.func,
+  renderGain:     React.PropTypes.func,
+  changeTaskName: React.PropTypes.func
 }

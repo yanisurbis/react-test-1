@@ -52,8 +52,13 @@ const getStringRepresentationOfGain = (secs, priceForHour) => {
   return `${getGain(secs, priceForHour)} Rub`
 }
 
+const getStringRepresentationOfPrice = (taskPrice) => {
+  return `${taskPrice} Rub`
+}
+
 export { 
   getStringRepresentationOfTime1, 
   getStringRepresentationOfTime2,
-  getStringRepresentationOfGain
+  getStringRepresentationOfGain,
+  getStringRepresentationOfPrice,
 }
