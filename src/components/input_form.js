@@ -103,10 +103,7 @@ class InputForm extends Component {
 
 export default InputForm
 
-// InputForm.propTypes = {
-//  
-// }
-//
-// InputForm.defaultProps = {
-//  
-// }
+InputForm.propTypes = {
+  renderTime: React.PropTypes.func,
+  addTask: React.PropTypes.func
+}

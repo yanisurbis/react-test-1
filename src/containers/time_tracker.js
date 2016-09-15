@@ -15,7 +15,8 @@ import InputForm  from '../components/input_form'
 import { 
   getStringRepresentationOfTime1,
   getStringRepresentationOfTime2,
-  getStringRepresentationOfGain
+  getStringRepresentationOfGain,
+  getStringRepresentationOfPrice
 } from '../helpers/time_money'
 
 /*
@@ -52,6 +53,7 @@ const TimeTracker = (props) => {
             {...task}
             renderTime     = {getStringRepresentationOfTime2}
             renderGain     = {getStringRepresentationOfGain}
+            renderPrice    = {getStringRepresentationOfPrice}
             changeTaskName = {changeTaskName}
             key            = {task.taskId.toString()}
           />
@@ -62,5 +64,4 @@ const TimeTracker = (props) => {
 }
 
 const mapStateToProps = ({ tasks }) => ({ tasks })
-
 export default connect(mapStateToProps, { addTask, changeTaskName })(TimeTracker)

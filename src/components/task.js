@@ -13,8 +13,6 @@ class Task extends Component {
   }
 
   onTaskNameClick = () => {
-    // debugger;
-    // add taskName to the state to handle input change
     // TODO - find out, do we need add editingTaskName to the state?
     this.setState({
       taskName: this.props.taskName,
@@ -36,7 +34,6 @@ class Task extends Component {
   }
 
   onTaskNameChange = (event) => {
-    //debugger;
     this.setState({
       taskName: event.target.value,
       focus: false,
@@ -71,11 +68,14 @@ class Task extends Component {
         document.removeEventListener('keydown', this.handleKeyPress);
       }
     }
-
   }
   
   render() {
-    let { taskTime, taskName, taskPrice } = this.props
+    // task properties
+    const { taskTime, taskName, taskPrice } = this.props
+
+    // time & money representation methods
+    const { renderTime, renderGain, renderPrice } = this.props
 
     return (
       <div className="">
@@ -103,9 +103,9 @@ class Task extends Component {
         }
         <div className="">
           <div className="">
-            <div className="">{this.props.taskPrice} rub/hr</div>
-            <div className="">{this.props.renderTime(taskTime)}</div>
-            <div className="">{this.props.renderGain(taskTime, taskPrice)} rub</div>
+            <div className="">{renderPrice(taskPrice)}</div>
+            <div className="">{renderTime(taskTime)}</div>
+            <div className="">{renderGain(taskTime, taskPrice)}</div>
           </div>
         </div>
       </div>
@@ -114,3 +114,14 @@ class Task extends Component {
 }
 
 export default Task
+
+Task.propTypes = {
+  taskTime:       React.Proptypes.number,
+  taskName:       React.Proptypes.string,
+  taskPrice:      React.Proptypes.number,
+  taskId    :     React.Proptypes.number,
+  renderPrice:    React.Proptypes.func,
+  renderTime:     React.Proptypes.func,
+  renderGain:     React.Proptypes.func,
+  changeTaskName: React.Proptypes.func
+}
