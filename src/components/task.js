@@ -6,30 +6,39 @@ class Task extends Component {
   constructor(props) {
     super(props)
 
-    let {taskName, taskPrice} = props
-
     this.state = {
       editingTaskName: false,
-      editingTaskPrice: false,
-      taskName: taskName,
-      taskPrice: taskPrice,
       focus: true,
     }
   }
 
   onTaskNameClick = () => {
-
-    this.prevTaskName = this.state.taskName
-
+    // debugger;
+    // add taskName to the state to handle input change
+    // TODO - find out, do we need add editingTaskName to the state?
     this.setState({
+      taskName: this.props.taskName,
       editingTaskName: true,
     })
+
+    document.addEventListener('keydown', this.handleKeyPress);
   }
 
-  onTaskNameChange = () => {
+  handleKeyPress = (e) => {
+    if (e.keyCode === 27) {
+      this.setState({
+        editingTaskName: false,
+        focus: true,
+      })
 
+      document.removeEventListener('keydown', this.handleKeyPress);
+    }
+  }
+
+  onTaskNameChange = (event) => {
+    //debugger;
     this.setState({
-      taskName: this.taskName.value,
+      taskName: event.target.value,
       focus: false,
     })
   }
@@ -41,24 +50,29 @@ class Task extends Component {
       focus: true,
     })
 
-    if (this.prevTaskName != this.state.taskName) {
+    if (this.props.taskName != this.state.taskName) {
       this.props.changeTaskName(this.props.taskId, this.state.taskName)
+      document.removeEventListener('keydown', this.handleKeyPress);
     }
   }
 
-  // onTaskNameKeyPress = (event) => {
-  //
-  //   let { keyCode } = event
-  //   console.log(event)
-  //
-  //   if (keyCode == 27) {
-  //     this.setState({
-  //       taskName: this.prevTaskName,
-  //       editingTaskName: false,
-  //     })
-  //   }
-  //
-  // }
+  onTaskNameKeyPress = (event) => {
+    let { charCode } = event
+    debugger;
+
+    if (charCode == 13) {
+      this.setState({
+        editingTaskName: false,
+        focus: true,
+      })
+
+      if (this.props.taskName != this.state.taskName) {
+        this.props.changeTaskName(this.props.taskId, this.state.taskName)
+        document.removeEventListener('keydown', this.handleKeyPress);
+      }
+    }
+
+  }
 
   // render time spent on a task
   
@@ -74,35 +88,37 @@ class Task extends Component {
   }
   
   render() {
-    let { taskTime } = this.props
-    let { taskName, taskPrice } = this.state
+    let { taskTime, taskName } = this.props
 
     return (
-      <div className="task mt-15">
+      <div className="">
         { (this.state.editingTaskName) ?
           <input
-            ref={input => this.taskName = input }
-            onChange={this.onTaskNameChange}
+            // ref={(input) => {
+            //   console.log("HI")
+            //   this.taskName1 = input
+            // }}
+            onChange={this.onTaskNameChange.bind(this)}
             onBlur={this.onTaskNameBlur}
-            /* onKeyPress={this.onTaskNameKeyPress} */
+            onKeyPress={this.onTaskNameKeyPress}
             ref={(input) => this.state.editingTaskName && this.state.focus ? input.focus() : null}
-            className="input"
+            className=""
             type="text"
             placeholder="Task name"
             value={this.state.taskName}
           />
         :
-          <div className="task-name"
+          <div className=""
             onClick={this.onTaskNameClick}
           >
             {taskName}
           </div>
         }
-        <div className="ctn">
-          <div className="row">
-            <div className="col task-name">{taskPrice} rub/hr</div>
-            <div className="col task-name">{this.props.renderTime(taskTime)}</div>
-            <div className="col task-name">{this.renderGain(this.props)} rub</div>
+        <div className="">
+          <div className="">
+            <div className="">{this.props.taskPrice} rub/hr</div>
+            <div className="">{this.props.renderTime(taskTime)}</div>
+            <div className="">{this.renderGain(this.props)} rub</div>
           </div>
         </div>
       </div>
