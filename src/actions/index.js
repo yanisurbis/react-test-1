@@ -3,11 +3,13 @@ export const DELETE_TASK = 'DELETE_TASK'
 export const CHANGE_TASK_NAME = 'CHANGE_TASK_NAME'
 export const RESUME_TASK = 'RESUME_TASK'
 
-let taskId = 0
+import { getIndex } from '../localStorage'
+
+let taskId
 
 export const addTask = ({taskName, taskPrice, taskTime}) => {
   // because idea has some parsing problems
-  ++taskId
+  taskId = getIndex()
   return {
     type: ADD_TASK,
     payload: {
