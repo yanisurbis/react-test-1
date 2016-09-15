@@ -147,7 +147,7 @@ class TimeTracker extends Component {
               </button>
             </div>
         </form>
-        {this.props.tasks.map(this.renderTasks)}
+        {[...this.props.tasks].reverse().map(this.renderTasks)}
       </div>
     )
   }
