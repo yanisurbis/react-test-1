@@ -42,7 +42,7 @@ const TimeTracker = (props) => {
   const {tasks} = props
 
   return (
-    <div className="myClass">
+    <div className="">
       <InputForm
         renderTime = {getStringRepresentationOfTime1}
         addTask    = {addTask}

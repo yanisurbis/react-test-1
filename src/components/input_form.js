@@ -66,7 +66,10 @@ class InputForm extends Component {
     return (
       <div className="">
         <h1>{this.props.renderTime(this.state.taskTime)}</h1>
-        <form onSubmit={this.onFormSubmit}>
+        <form
+          onSubmit={this.onFormSubmit}
+          className="form"
+        >
           <div className="">
             <input
               ref         = {input => this.taskName = input}
@@ -90,7 +93,7 @@ class InputForm extends Component {
           <div className="">
             <button
               type="submit"
-              className=""
+              className="btn btn-primary"
             >
               {btnText}
             </button>

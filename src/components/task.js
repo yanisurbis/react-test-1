@@ -78,35 +78,49 @@ class Task extends Component {
     const { renderTime, renderGain, renderPrice } = this.props
 
     return (
-      <div className="">
-        { (this.state.editingTaskName) ?
-          <input
-            // ref={(input) => {
-            //   console.log("HI")
-            //   this.taskName1 = input
-            // }}
-            onChange={this.onTaskNameChange.bind(this)}
-            onBlur={this.onTaskNameBlur}
-            onKeyPress={this.onTaskNameKeyPress}
-            ref={(input) => this.state.editingTaskName && this.state.focus ? input.focus() : null}
-            className=""
-            type="text"
-            placeholder="Task name"
-            value={this.state.taskName}
-          />
-        :
-          <div className=""
-            onClick={this.onTaskNameClick}
-          >
-            {taskName}
-          </div>
-        }
-        <div className="">
+      <div className="row mt-15">
+        <div className="col">
+          { (this.state.editingTaskName) ?
+            <input
+              // ref={(input) => {
+              //   console.log("HI")
+              //   this.taskName1 = input
+              // }}
+              onChange={this.onTaskNameChange.bind(this)}
+              onBlur={this.onTaskNameBlur}
+              onKeyPress={this.onTaskNameKeyPress}
+              ref={(input) => this.state.editingTaskName && this.state.focus ? input.focus() : null}
+              className=""
+              type="text"
+              placeholder="Task name"
+              value={this.state.taskName}
+            />
+          :
+            <div className=""
+              onClick={this.onTaskNameClick}
+            >
+              {taskName}
+            </div>
+          }
           <div className="">
-            <div className="">{renderPrice(taskPrice)}</div>
-            <div className="">{renderTime(taskTime)}</div>
-            <div className="">{renderGain(taskTime, taskPrice)}</div>
+            <div className="">
+              <div className="">{renderPrice(taskPrice)}</div>
+              <div className="">{renderTime(taskTime)}</div>
+              <div className="">{renderGain(taskTime, taskPrice)}</div>
+            </div>
           </div>
+          <button
+            type="submit"
+            className="btn btn-primary"
+          >
+            Resume
+          </button>
+          <button
+            type="submit"
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
         </div>
       </div>
     )

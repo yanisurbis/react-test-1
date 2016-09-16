@@ -1,48 +1,14 @@
-/*body {*/
-    /*font-family: , sans-serif;*/
-    /*!*, sans-serif;*!*/
-    /*background-color: whitesmoke;*/
-/*}*/
-
-/*.myClass {*/
-    /*border: 1px solid red;*/
-    /*background-color: aqua;*/
-/*}*/
 
 /*#E81123 red*/
 /*#666666 grey*/
 
-body {
-    font-family: 'Roboto';
-}
-
-/*.submit-btn {*/
-    /*height: 3rem;*/
-    /*width: 25%;*/
+/*body {*/
+    /*font-family: 'Fira Sans', 'Roboto';*/
+    /*background-color: white;*/
 /*}*/
 
-/*.input {*/
-    /*height: 3rem;*/
-    /*padding: 5px 10px;*/
-    /*width: 100%;*/
-/*}*/
-
-/*.ctn {*/
-    /*max-width: 768px;*/
-/*}*/
-
-/*.task {*/
-    /*!*height: 3rem;*!*/
-    /*!*padding: 5px 10px;*!*/
-    /*!*background-color: #dddddd;*!*/
-    /*max-width: 768px;*/
-    /*padding: 1px 0px;*/
-    /*border-bottom: 3px solid #777777;*/
-/*}*/
-
-/*.task-name {*/
-    /*!*height: 3rem;*!*/
-    /*margin: 10px 10px;*/
-    /*!*background-color: #777777;*!*/
+/*.btn-primary {*/
+    /*background-color: #BA7F79 !important;*/
+    /*border-color: #BA7F79 !important;*/
 /*}*/
 

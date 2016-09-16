@@ -1,3 +1,6 @@
+require('mobi.css')
+require('../style/style.css')
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -21,10 +24,6 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>
-  , document.querySelector('.container1'));
-
-
-
-
+  , document.querySelector('.container'));
 
 
