@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import TimeTracker from '../containers/time_tracker'
+import TimeTracker from '../containers/TimeTracker/TimeTracker'
 
 const App = () => {
   return (

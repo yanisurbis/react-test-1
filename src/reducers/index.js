@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux'
-import TasksReducer from './reducer_tasks'
+
+import {
+  timeTrackerReducer,
+} from '../containers/TimeTracker/reducer'
 
 const rootReducer = combineReducers({
-  tasks: TasksReducer,
+  timeTracker: timeTrackerReducer,
 })
 
 export default rootReducer

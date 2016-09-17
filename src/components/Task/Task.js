@@ -55,7 +55,6 @@ class Task extends Component {
 
   onTaskNameKeyPress = (event) => {
     let { charCode } = event
-    debugger;
 
     if (charCode == 13) {
       this.setState({
@@ -69,10 +68,31 @@ class Task extends Component {
       }
     }
   }
+
+  onTaskDelete = () => {
+    const {
+      taskId,
+
+      deleteTask,
+    }  = this.props
+
+    deleteTask(taskId)
+  }
+
+  onTaskResume = () => {
+    const {
+      taskName,
+      taskPrice,
+
+      resumeTask
+    } = this.props
+    console.log(`task price HERE is ${taskPrice}`)
+    resumeTask(taskName, taskPrice)
+  }
   
   render() {
     // task properties
-    const { taskTime, taskName, taskPrice } = this.props
+    const { taskTime, taskName, taskPrice, taskId } = this.props
 
     // time & money representation methods
     const { renderTime, renderGain, renderPrice } = this.props
@@ -81,23 +101,25 @@ class Task extends Component {
       <div className="row mt-15">
         <div className="col">
           { (this.state.editingTaskName) ?
-            <input
-              // ref={(input) => {
-              //   console.log("HI")
-              //   this.taskName1 = input
-              // }}
-              onChange={this.onTaskNameChange.bind(this)}
-              onBlur={this.onTaskNameBlur}
-              onKeyPress={this.onTaskNameKeyPress}
-              ref={(input) => this.state.editingTaskName && this.state.focus ? input.focus() : null}
-              className=""
-              type="text"
-              placeholder="Task name"
-              value={this.state.taskName}
-            />
-          :
+            <form className="form">
+              <input
+                // ref={(input) => {
+                //   console.log("HI")
+                //   this.taskName1 = input
+                // }}
+                onChange={this.onTaskNameChange.bind(this)}
+                onBlur={this.onTaskNameBlur}
+                onKeyPress={this.onTaskNameKeyPress}
+                ref={(input) => this.state.editingTaskName && this.state.focus ? input.focus() : null}
+                className="input"
+                type="text"
+                placeholder="Task name"
+                value={this.state.taskName}
+              />
+            </form>
+            :
             <div className=""
-              onClick={this.onTaskNameClick}
+                 onClick={this.onTaskNameClick}
             >
               {taskName}
             </div>
@@ -112,12 +134,14 @@ class Task extends Component {
           <button
             type="submit"
             className="btn btn-primary"
+            onClick={this.onTaskResume}
           >
             Resume
           </button>
           <button
-            type="submit"
+            type="click"
             className="btn btn-danger"
+            onClick = {this.onTaskDelete}
           >
             Delete
           </button>
@@ -132,7 +156,7 @@ export default Task
 Task.propTypes = {
   taskTime:       React.PropTypes.number,
   taskName:       React.PropTypes.string,
-  taskPrice:      React.PropTypes.number,
+  taskPrice:      React.PropTypes.string,
   taskId    :     React.PropTypes.number,
   renderPrice:    React.PropTypes.func,
   renderTime:     React.PropTypes.func,
