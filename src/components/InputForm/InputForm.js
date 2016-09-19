@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Time from '../Time/Time'
+
 class InputForm extends Component {
 
   constructor() {
@@ -70,7 +72,10 @@ class InputForm extends Component {
 
     return (
       <div className="">
-        <h1>{renderTime(time)}</h1>
+        <Time
+          time={time}
+          type="HEADER"
+        />
         <form
           onSubmit={this.onStartOrSubmitTask}
           className="form"
