@@ -20,13 +20,6 @@ import Task       from '../../components/Task/Task'
 import InputForm  from '../../components/InputForm/InputForm'
 
 // helpers methods for dealing with time and money presentation
-import { 
-  getStringRepresentationOfTime1,
-  getStringRepresentationOfTime2,
-  getStringRepresentationOfGain,
-  getStringRepresentationOfPrice
-} from './time_money'
-
 /*
 * TODO: validation
 * TODO: deleting
@@ -73,8 +66,6 @@ const TimeTracker = (props) => {
   return (
     <div className="">
       <InputForm
-        // helpers
-        renderTime = {getStringRepresentationOfTime1}
         // actions
         addTask         = {addTask}
         changeTaskName  = {changeTaskNameInput}
@@ -89,10 +80,6 @@ const TimeTracker = (props) => {
       {[...tasks].reverse().map((task) => {
         return (
           <Task
-            // helpers
-            renderTime     = {getStringRepresentationOfTime2}
-            renderGain     = {getStringRepresentationOfGain}
-            renderPrice    = {getStringRepresentationOfPrice}
             // actions
             changeTaskName = {changeTaskName}
             deleteTask     = {deleteTask}
