@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import Time from '../Time/Time'
 import Gain from '../Gain/Gain'
+import Price from '../Price/Price'
 
 class Task extends Component {
   constructor(props) {
@@ -137,7 +138,10 @@ class Task extends Component {
                 time = {taskTime}
                 type = "TASK"
               />
-              <div className="">{renderGain(taskTime, taskPrice)}</div>
+              <Price
+                type = "RUB"
+                ratePerHour={taskPrice}
+              />
             </div>
           </div>
           <button
