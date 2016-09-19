@@ -5,71 +5,100 @@ import Time from '../Time/Time'
 import Gain from '../Gain/Gain'
 import Price from '../Price/Price'
 
+/*
+* component is aimed for rendering Task, yay!
+*    it renders price, gain of the task that is rendered, and time for completion
+*    it renders name of the task
+*      we should be able to change that name
+*        start state - simple text
+*        after click on name - input -> change name
+*        after esc, enter, in blur -> simple text
+* */
+
 class Task extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      // to toggle representation of task name
       editingTaskName: false,
-      focus: true,
+      taskName: null,
     }
   }
 
-  onTaskNameClick = () => {
-    // TODO - find out, do we need add editingTaskName to the state?
+  startEditingTaskName = () => {
+    const {taskName} = this.props
+
     this.setState({
-      taskName: this.props.taskName,
-      editingTaskName: true,
+      editingTaskName : true,
+      // for input binding
+      taskName        : taskName,
     })
 
     document.addEventListener('keydown', this.handleKeyPress);
   }
 
-  handleKeyPress = (e) => {
-    if (e.keyCode === 27) {
-      this.setState({
-        editingTaskName: false,
-        focus: true,
-      })
+  stopEditingTaskName = () => {
+    this.setState({
+      editingTaskName: false,
+      taskName: null,
+    })
 
-      document.removeEventListener('keydown', this.handleKeyPress);
-    }
+    document.removeEventListener('keydown', this.handleKeyPress);
   }
 
-  onTaskNameChange = (event) => {
-    this.setState({
-      taskName: event.target.value,
-      focus: false,
-    })
+  // switching from text to input
+  onTaskNameClick = () => {
+    this.startEditingTaskName()
   }
 
   onTaskNameBlur = () => {
+    this.changeTaskNameIfDiff()
+  }
 
-    this.setState({
-      editingTaskName: false,
-      focus: true,
-    })
-
-    if (this.props.taskName != this.state.taskName) {
-      this.props.changeTaskName(this.props.taskId, this.state.taskName)
-      document.removeEventListener('keydown', this.handleKeyPress);
+  handleKeyPress = (e) => {
+    switch (e.keyCode) {
+      // esc
+      case 27:
+        this.stopEditingTaskName()
+        return
+      // enter
+      case 13:
+        this.changeTaskNameIfDiff()
+        return
     }
   }
 
-  onTaskNameKeyPress = (event) => {
-    let { charCode } = event
+  onTaskNameChange = () => {
+    this.setState({
+      taskName: this.inputTaskName.value,
+    })
 
-    if (charCode == 13) {
-      this.setState({
-        editingTaskName: false,
-        focus: true,
-      })
+    console.log("VALUE")
+    console.log(this.state.taskName)
+  }
 
-      if (this.props.taskName != this.state.taskName) {
-        this.props.changeTaskName(this.props.taskId, this.state.taskName)
-        document.removeEventListener('keydown', this.handleKeyPress);
-      }
+  changeTaskNameIfDiff = () => {
+    // action creator
+    const {changeTaskName} = this.props
+
+    // get previous task name
+    const {
+      taskId,
+      taskName: taskNamePrev,
+    } = this.props
+
+    // get current task name
+    const {
+      taskName: taskNameCurr,
+    } = this.state
+
+    // write if have changes
+    if (taskNamePrev !== taskNameCurr) {
+      changeTaskName(taskId, taskNameCurr)
     }
+
+    this.stopEditingTaskName()
   }
 
   onTaskDelete = () => {
@@ -89,72 +118,66 @@ class Task extends Component {
 
       resumeTask
     } = this.props
-    console.log(`task price HERE is ${taskPrice}`)
     resumeTask(taskName, taskPrice)
   }
   
   render() {
     // task properties
-    const { taskTime, taskName, taskPrice, taskId } = this.props
-
-    // time & money representation methods
-    const { renderTime, renderGain, renderPrice } = this.props
+    const {
+      taskTime,
+      taskName,
+      taskPrice
+    } = this.props
 
     return (
       <div className="row mt-15">
         <div className="col">
           { (this.state.editingTaskName) ?
+            // if editing -> render as input
             <form className="form">
               <input
-                // ref={(input) => {
-                //   console.log("HI")
-                //   this.taskName1 = input
-                // }}
-                onChange={this.onTaskNameChange.bind(this)}
-                onBlur={this.onTaskNameBlur}
-                onKeyPress={this.onTaskNameKeyPress}
-                ref={(input) => this.state.editingTaskName && this.state.focus ? input.focus() : null}
-                className="input"
-                type="text"
-                placeholder="Task name"
-                value={this.state.taskName}
+                ref           ={(input) => this.inputTaskName = input}
+                onChange      ={this.onTaskNameChange}
+                onBlur        ={this.onTaskNameBlur}
+                className     ="input"
+                type          ="text"
+                placeholder   ="Task name"
+                value         ={this.state.taskName}
+                autoFocus
               />
             </form>
             :
+            // if aren't editing - display simple text
             <div className=""
-                 onClick={this.onTaskNameClick}
+              onClick={this.onTaskNameClick}
             >
               {taskName}
             </div>
           }
-          <div className="">
-            <div className="">
-              <Gain
-                type="RUB"
-                time={taskTime}
-                ratePerHour={taskPrice}
-              />
-              <Time
-                time = {taskTime}
-                type = "TASK"
-              />
-              <Price
-                type = "RUB"
-                ratePerHour={taskPrice}
-              />
-            </div>
-          </div>
+          <Gain
+            type        ="RUB"
+            time        ={taskTime}
+            ratePerHour ={taskPrice}
+          />
+          <Time
+            time        ={taskTime}
+            type        ="TASK"
+          />
+          <Price
+            type        ="RUB"
+            ratePerHour ={taskPrice}
+          />
           <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={this.onTaskResume}
+            type        ="submit"
+            className   ="btn btn-primary"
+            onClick     ={this.onTaskResume}
           >
             Resume
           </button>
           <button
-            type="click"
-            className="btn btn-danger"
-            onClick = {this.onTaskDelete}
+            type        ="click"
+            className   ="btn btn-danger"
+            onClick     ={this.onTaskDelete}
           >
             Delete
           </button>
