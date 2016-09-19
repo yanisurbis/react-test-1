@@ -5,13 +5,16 @@
   "main": "index.js",
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "webpack-dev-server --display-error-details --devtool source-map",
     "dev-server": "webpack-dev-server --display-error-details --devtool source-map",
-    "hot": "webpack-dev-server --display-error-details --hot --inline --module-bind"
+    "hot": "webpack-dev-server --display-error-details --hot --inline --module-bind",
+    "watch": "webpack --watch",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@kadira/storybook": "^2.15.1",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
